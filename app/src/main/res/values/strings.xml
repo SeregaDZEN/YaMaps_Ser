@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">YaMaps</string>
+    <string name="need_permission">Location permission required</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="empty">Empty</string>
+    <string name="to_places">To places</string>
+    <string name="map_fragment_title">Map</string>
+    <string name="places_fragment_title">Places</string>
+    <string name="enter_name">Enter name</string>
+    <string name="yandex_maps_api_key">2cd32014–77af-4585-8cce-6c54f558aebb</string>
+
+</resources>
