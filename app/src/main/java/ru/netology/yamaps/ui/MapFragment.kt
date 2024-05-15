@@ -29,6 +29,7 @@ import com.yandex.mapkit.mapview.MapView
 import com.yandex.mapkit.user_location.UserLocationLayer
 import com.yandex.mapkit.user_location.UserLocationObjectListener
 import com.yandex.mapkit.user_location.UserLocationView
+import com.yandex.runtime.image.ImageProvider
 import com.yandex.runtime.ui_view.ViewProvider
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -69,6 +70,9 @@ class MapFragment : Fragment() {
         }
     }
 
+
+
+
     private val viewModel by viewModels<MapViewModel>()
 
     private val placeTapListener = MapObjectTapListener { mapObject, _ ->
@@ -105,12 +109,25 @@ class MapFragment : Fragment() {
             }
         }
 
+    private val placemarkTapListener = MapObjectTapListener { _, point ->
+        Toast.makeText(
+            requireContext(),
+            "Tapped the point (${point.longitude}, ${point.latitude})",
+            Toast.LENGTH_SHORT
+        ).show()
+        true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MapKitFactory.setApiKey(BuildConfig.MAPS_API_KEY)
         MapKitFactory.initialize(requireContext())
 
-
+        val image = ImageProvider.fromResource(requireContext(), R.drawable.ic_marker)
+        val placemark = mapView?.map?.mapObjects?.addPlacemark()?.apply {
+            geometry = Point(59.935493, 30.327392)
+            setIcon(image)
+        }
+        placemark?.addTapListener(placemarkTapListener)
     }
 
     override fun onCreateView(
