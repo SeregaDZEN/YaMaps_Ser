@@ -2,7 +2,42 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.YaMaps"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/Theme.YaMaps"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+       />
+
+    <TextView
+        android:id="@+id/coordinates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:paddingEnd="16dp"
+        tools:text="38.55 45.66"/>
+
 
     <com.yandex.mapkit.mapview.MapView
         android:id="@+id/map"
@@ -18,7 +53,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/ic_baseline_add_24" />
+        app:srcCompat="@drawable/ic_baseline_add_24"
+        android:contentDescription="@string/plus" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/minus"
@@ -28,7 +64,8 @@
         app:layout_constraintBottom_toTopOf="@id/location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/plus"
-        app:srcCompat="@drawable/ic_baseline_remove_24" />
+        app:srcCompat="@drawable/ic_baseline_remove_24"
+        android:contentDescription="@string/minus" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/location"
@@ -37,6 +74,7 @@
         android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_my_location_24" />
+        app:srcCompat="@drawable/ic_baseline_my_location_24"
+        android:contentDescription="@string/location" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
