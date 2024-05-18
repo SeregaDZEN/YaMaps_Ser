@@ -8,6 +8,12 @@
     <string name="map_fragment_title">Map</string>
     <string name="places_fragment_title">Places</string>
     <string name="enter_name">Enter name</string>
-    <string name="yandex_maps_api_key">2cd32014–77af-4585-8cce-6c54f558aebb</string>
+    <string name="yandex_maps_api_key">2cd32014–77af–4585–8cce-6c54f558aebb</string>
+    <string name="place_title">"%s (%.2f, %.2f)"</string>
+    <string name="coordinates">Lat: %.2f, Lon: %.2f</string>
+    <string name="location">location</string>
+    <string name="minus">minus</string>
+    <string name="plus">plus</string>
+    <string name="menu">menu</string>
 
 </resources>
