@@ -24,7 +24,7 @@ class AddPlaceDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val viewModel by viewModels<MapViewModel>()
+        val viewModel: MapViewModel by viewModels()
         val view = AppCompatEditText(requireContext())
         return AlertDialog.Builder(requireContext())
             .setView(view)
@@ -43,6 +43,7 @@ class AddPlaceDialog : DialogFragment() {
                     )
                 )
             }
+            .setNegativeButton(android.R.string.cancel, null)
             .create()
     }
 }

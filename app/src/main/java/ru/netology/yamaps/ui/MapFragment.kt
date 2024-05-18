@@ -25,6 +25,7 @@ import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.map.InputListener
 import com.yandex.mapkit.map.Map
 import com.yandex.mapkit.map.MapObjectTapListener
+import com.yandex.mapkit.map.PlacemarkMapObject
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.mapkit.user_location.UserLocationLayer
 import com.yandex.mapkit.user_location.UserLocationObjectListener
@@ -48,16 +49,32 @@ class MapFragment : Fragment() {
     private var _binding: MapFragmentBinding? = null
     private val binding get() = _binding!!
     private val startLocation = Point(59.9402, 30.315)
-    private var zoomValue: Float = 16.5f
     private var mapView: MapView? = null
     private lateinit var userLocation: UserLocationLayer
+    private var currentPlacemark: PlacemarkMapObject? = null
 
     private val listener = object : InputListener {
-        override fun onMapTap(map: Map, point: Point) = Unit
+        override fun onMapTap(map: Map, point: Point) {
+            val image = DrawableImageProvider(requireContext(), R.drawable.ic_marker)
+
+            val coordinat = binding.coordinates
+            val formattedLatitude = point.latitude
+            val formattedLongitude = point.longitude
+            coordinat.text = getString(R.string.coordinates, formattedLatitude, formattedLongitude)
+
+
+            currentPlacemark?.let {
+                map.mapObjects.remove(it)
+            }
+            currentPlacemark = map.mapObjects.addPlacemark(point, image).apply {
+                userData = "New Place"
+            }
+
+        }
 
         override fun onMapLongTap(map: Map, point: Point) {
             AddPlaceDialog.newInstance(point.latitude, point.longitude)
-                .show(childFragmentManager, null)
+                .show(childFragmentManager, "AddPlaceDialog")
         }
     }
 
@@ -99,6 +116,7 @@ class MapFragment : Fragment() {
                         )
                     }
                 }
+
                 else -> {
                     Toast.makeText(
                         requireContext(),
@@ -121,6 +139,7 @@ class MapFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MapKitFactory.initialize(requireContext())
+
     }
 
     override fun onCreateView(
@@ -149,7 +168,7 @@ class MapFragment : Fragment() {
                         collection.clear()
                         places.forEach { place ->
                             val placeBinding = PlaceBinding.inflate(layoutInflater)
-                            placeBinding.title.text = place.name
+                            placeBinding.title.text = getString(R.string.place_title, place.name, place.lat, place.long)
                             collection.addPlacemark(
                                 Point(place.lat, place.long),
                                 ViewProvider(placeBinding.root)
@@ -226,19 +245,12 @@ class MapFragment : Fragment() {
 
         }, viewLifecycleOwner)
 
-        moveToStartLocation()
-
         val image = DrawableImageProvider(requireContext(), R.drawable.ic_marker)
         val placemark = binding.map.map.mapObjects.addPlacemark(startLocation)
         placemark.setIcon(image)
         placemark.addTapListener(placemarkTapListener)
     }
 
-    private fun moveToStartLocation() {
-        binding.map.map.move(
-            CameraPosition(startLocation, zoomValue, 0.0f, 0.0f)
-        )
-    }
 
     override fun onStart() {
         super.onStart()
